@@ -288,7 +288,7 @@ class CourseRecordedAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ("المعلومات الأساسية", {
-            "fields": ("title", "slug","image_url", "is_published", "is_featured", "keywords", "summary", "long_description")
+            "fields": ("title", "slug", "url", "is_published", "is_featured", "keywords", "summary", "long_description")
         }),
         ("إدخال سريع بالنص (يُحوَّل تلقائياً إلى JSON)", {
             "fields": ("objectives_text", "target_audience_text", "outline_text"),
@@ -312,7 +312,7 @@ class CourseOnsiteAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ("المعلومات الأساسية", {
-            "fields": ("title", "slug","image_url", "is_published", "is_featured", "keywords", "summary", "long_description")
+            "fields": ("title", "slug", "url", "is_published", "is_featured", "keywords", "summary", "long_description")
         }),
         ("إدخال سريع بالنص (يُحوَّل تلقائياً إلى JSON)", {
             "fields": ("objectives_text", "target_audience_text", "outline_text"),
@@ -347,4 +347,3 @@ class ToolAdmin(admin.ModelAdmin):
             return format_html('<a href="{}" target="_blank">فتح الرابط</a>', link)
         return "-"
     link_preview.short_description = "رابط الأداة"
-
