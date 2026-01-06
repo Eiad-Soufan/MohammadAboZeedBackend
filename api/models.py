@@ -43,7 +43,7 @@ class Article(TimeStampedModel):
     cover_url = models.URLField(blank=True)             # صورة خارجية
     is_published = models.BooleanField(default=False)
     published_at = models.DateTimeField(null=True, blank=True)
-
+    url = models.URLField(blank=True)   
     # بديل خفيف عن الوسوم:
     keywords = models.JSONField(default=list, blank=True)   # ["ذكاء اصطناعي","Python",...]
 
@@ -89,7 +89,7 @@ class _CourseBase(TimeStampedModel):
     request_enabled = models.BooleanField(default=True)
     # بديل خفيف عن الوسوم:
     keywords = models.JSONField(default=list, blank=True)
-
+    url = models.URLField(blank=True)   
     class Meta:
         abstract = True
         indexes = [models.Index(fields=["slug"]), models.Index(fields=["is_published"])]
@@ -123,7 +123,7 @@ class Book(TimeStampedModel):
     author_name = models.CharField(max_length=160, blank=True)
     description = models.TextField(blank=True)
     cover_url = models.URLField(blank=True)              # صورة خارجية
-    buy_url = models.URLField(blank=True)                # رابط شراء/تحميل
+    url = models.URLField(blank=True)                # رابط شراء/تحميل
     is_featured = models.BooleanField(default=False)
     is_published = models.BooleanField(default=True)
     request_enabled = models.BooleanField(default=True)
@@ -142,7 +142,7 @@ class Tool(TimeStampedModel):
     name = models.CharField(max_length=160)
     description = models.TextField(blank=True)
     image_url = models.URLField(blank=True)              # صورة خارجية
-    link_url = models.URLField(blank=True)               # رابط الأداة/الموقع
+    url = models.URLField(blank=True)               # رابط الأداة/الموقع
     is_featured = models.BooleanField(default=False)
     is_published = models.BooleanField(default=True)
     request_enabled = models.BooleanField(default=True)
@@ -154,96 +154,3 @@ class Tool(TimeStampedModel):
 
     def __str__(self):
         return self.name
-
-
-
-# ======== تفاعلات المستخدم (بسيطة وموحّدة) ========
-
-# class InteractionType(models.TextChoices):
-#     SAVED  = "saved",  "Saved"
-#     BOUGHT = "bought", "Bought"
-
-# class UserInteraction(TimeStampedModel):
-#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="interactions")
-
-#     # حقل واحد لأي موديل: (Book/Tool/CourseRecorded/CourseOnsite/…)
-#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-#     object_id    = models.PositiveBigIntegerField()   # يناسب BigAutoField الافتراضي
-#     content_object = GenericForeignKey("content_type", "object_id")
-
-#     interaction = models.CharField(max_length=12, choices=InteractionType.choices, default=InteractionType.SAVED)
-
-#     def __str__(self):
-#         return f"{self.user} -> {self.content_object} [{self.interaction}]"
-
-
-# ==============================
-# ==============================
-# ==============================
-# ==============================
-# ==============================
-
-# class RequestStatus(models.TextChoices):
-#     NEW = "new", "New"                    # وصل الطلب
-#     CONTACTED = "contacted", "Contacted"  # تم التواصل
-#     CONFIRMED = "confirmed", "Confirmed"  # تأكيد الطلب/الحجز
-#     FULFILLED = "fulfilled", "Fulfilled"  # تم التسليم/الإتمام
-#     CANCELED = "canceled", "Canceled"     # أُلغي
-
-# class PreferredContact(models.TextChoices):
-#     WHATSAPP = "whatsapp", "WhatsApp"
-#     PHONE = "phone", "Phone"
-#     EMAIL = "email", "Email"
-
-# class RequestBase(models.Model):
-
-#     user = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
-#         on_delete=models.CASCADE,
-#         related_name="%(app_label)s_%(class)s_requests",
-#     )
-
-
-#     customer_name  = models.CharField(max_length=120, blank=True, null=True)
-#     customer_email = models.EmailField(blank=True, null=True)
-#     customer_phone = models.CharField(max_length=40, blank=True, null=True)
-
-#     preferred_contact = models.CharField(
-#         max_length=16, choices=PreferredContact.choices, default=PreferredContact.EMAIL
-#     )
-
-#     # ملخص الطلب
-#     message = models.TextField(blank=True, null=True)                   # ملاحظات من العميل
-
-#     # حالة المعالجة
-#     status = models.CharField(max_length=12, choices=RequestStatus.choices, default=RequestStatus.NEW)
-
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     class Meta:
-#         abstract = True
-#         ordering = ["-created_at"]
-
-#     def __str__(self):
-#         who = self.customer_name or (self.user and self.user.get_username()) or "Anonymous"
-#         return f"{who} ({self.created_at:%Y-%m-%d})"
-
-
-# # ======== طلبات الكتب ========
-# class BookRequest(RequestBase):
-#     book = models.ForeignKey("Book", on_delete=models.CASCADE, related_name="requests")
-
-# # ======== طلبات الأدوات ========
-# class ToolRequest(RequestBase):
-#     tool = models.ForeignKey("Tool", on_delete=models.CASCADE, related_name="requests")
-
-# # ======== طلبات الكورسات المسجّلة ========
-# class CourseRecordedRequest(RequestBase):
-#     course = models.ForeignKey("CourseRecorded", on_delete=models.CASCADE, related_name="requests")
-
-# # ======== طلبات الكورسات الحضورية ========
-# class CourseOnsiteRequest(RequestBase):
-#     course = models.ForeignKey("CourseOnsite", on_delete=models.CASCADE, related_name="requests")
-
-
