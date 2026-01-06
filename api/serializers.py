@@ -181,6 +181,7 @@ class CourseRecordedListSerializer(serializers.ModelSerializer):
             "request_enabled",
             "keywords",
             "created_at",
+            "url",
         ]
         read_only_fields = fields  # للعرض فقط في قوائم
 
@@ -203,6 +204,7 @@ class CourseRecordedDetailSerializer(serializers.ModelSerializer):
             "keywords",
             "created_at",
             "updated_at",
+            "url",
         ]
         read_only_fields = fields  # API للقراءة فقط حالياً
 
@@ -223,6 +225,7 @@ class CourseOnsiteListSerializer(serializers.ModelSerializer):
             "request_enabled",
             "keywords",
             "created_at",
+            "url",
         ]
         read_only_fields = fields
 
@@ -245,6 +248,7 @@ class CourseOnsiteDetailSerializer(serializers.ModelSerializer):
             "keywords",
             "created_at",
             "updated_at",
+            "url",
         ]
         read_only_fields = fields
 
@@ -260,7 +264,7 @@ class BookListSerializer(serializers.ModelSerializer):
             "author_name",
             "description",          # مختصر للبطاقة؛ إن رغبتَ لاحقًا يمكن الاقتصار على مقتطف
             "cover_url",
-            "buy_url",
+            "url",
             "is_featured",
             "is_published",
             "request_enabled",
@@ -278,7 +282,7 @@ class BookDetailSerializer(serializers.ModelSerializer):
             "author_name",
             "description",
             "cover_url",
-            "buy_url",
+            "url",
             "is_featured",
             "is_published",
             "request_enabled",
@@ -299,7 +303,7 @@ class ToolListSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "image_url",
-            "link_url",
+            "url",
             "is_featured",
             "is_published",
             "request_enabled",
@@ -316,7 +320,7 @@ class ToolDetailSerializer(serializers.ModelSerializer):
             "name",
             "description",
             "image_url",
-            "link_url",
+            "url",
             "is_featured",
             "is_published",
             "request_enabled",
@@ -342,6 +346,7 @@ class ArticleListSerializer(serializers.ModelSerializer):
             "cover_url",
             "published_at",
             "keywords",
+            "url",
         )
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
@@ -357,4 +362,5 @@ class ArticleDetailSerializer(serializers.ModelSerializer):
             "is_published",
             "published_at",
             "keywords",
+            "url",
         )
